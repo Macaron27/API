@@ -16,7 +16,16 @@ function generateRefreshToken(userId) {
   );
 }
 
+function requireRole(role) {
+  return (req, res, next) => {
+    if (req.userRole !== role) return res.status(403).json({ error: 'Forbidden' });
+    next();
+  };
+}
+
+
 module.exports = {
   generateAccessToken,
-  generateRefreshToken
+  generateRefreshToken,
+  requireRole
 };
